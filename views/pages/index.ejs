@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<%- include('../partials/head') %>
+
+    <body>
+        <style>
+            body {
+                height: 100%;
+                width: 100%;
+
+            }
+
+            html {
+                margin: 0;
+            }
+
+            footer {
+                background-color: teal;
+            }
+
+            nav {
+                background-color: yellowgreen;
+            }
+        </style>
+
+        <%- include('../partials/nav') %>
+
+            <div class="row">
+                <%- include('../partials/aside') %>
+                <%- include('../partials/main',) %>
+            </div>
+        <%- include('../partials/footer') %>
+    </body>
+
+</html>

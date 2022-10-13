@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<%- include('../partials/head') %>
+
+<body >
+  <style>
+    .ca {
+            border-radius: 10px;
+      padding: 10px;
+      margin: 1px;
+    }
+
+    main {
+      padding: 10px;
+    }
+  </style>
+
+  <%- include('../partials/nav') %>
+
+  <div class="row">
+    <%- include('../partials/aside') %>
+    <main class="col-10">
+      <h1 class="text-center"> <%= filme[0].titulo %></h1>
+      <div style="width: 80%; margin: 0 auto" class="row">
+        <div class="col-sm-12 ca bg-info text-center">
+          <h5>Detalhes sobre o Filme</h5>
+          <p>Descrição : <%= filme[0].descricao %></p>
+          <p>Ano de lançamento : <%= filme[0].ano_de_lancamento %></p>
+          <p>Duração : <%= filme[0].duracao_do_filme %> min</p>
+          <p>Classificação : <%= filme[0].classificacao %></p>
+        </div>
+      </div>
+      <div style="width: 80%; margin: 0 auto" class="row">
+        <div class="col-sm-12 ca bg-success text-center">
+          <h5>Custos</h5>
+          <p> Duração da locação : <%= filme[0].duracao_da_locacao %> dias</p>
+          <p> Preço da locação : R$ <%= filme[0].preco_da_locacao %></p>
+          <p> Custo da substituição : R$ <%= filme[0].custo_de_substituicao %></p>
+        </div>
+      </div>
+
+      <div style="width: 80%; margin: 0 auto" class="row">
+        <div class="col-md-12 text-center ca bg-success">
+            <h5>Atores do filme</h5>
+            <% atores.forEach(function(ator){ %>
+                    <p><%=ator.primeiro_nome %> <%= ator.ultimo_nome %></p>
+                <%})%>
+        </div>
+      </div>
+
+    </main>
+
+
+  </div>
+  <%- include('../partials/footer') %>
+
+</body>
+
+</html>

@@ -1,0 +1,19 @@
+<style>
+    .card {
+        margin: 10px;
+    }
+</style>
+<main class="col-10 row">
+    <h4 >Categoria : <%= categoria%></h4>
+
+    <% filmes.forEach(function(filme){ %>
+        <div class="card text-center" style="width:18rem">
+            <div class="card-body">
+                <h5 class="card-title"><%= filme.titulo %></h5>
+                <p class="card-text"><%= filme.descricao %></p>
+                <a href="http://localhost:3000/detalhes/<%= filme.filme_id %>"  class="btn btn-primary">Detalhes</a>
+            </div>
+        </div>
+        <% }) %>
+
+</main>

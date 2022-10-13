@@ -1,0 +1,26 @@
+<style>
+    .card {
+        margin: 10px;
+    }
+</style>
+<main class="col-10 row">          
+
+
+    <% categorias.forEach(function(categoria){ %>
+        <div class="card text-center" style="width:18rem">
+            <div class="card-body">
+                <h5 class="card-title"><%= categoria.nome %></h5>
+                <p class="card-text"><%= categoria.description %></p>
+            <a href="http://localhost:3000/categoria/<%= categoria.categoria_id %>"    class="btn btn-primary">Go somewhere</a>
+            </div>
+        </div>
+    <%})%>
+
+
+        
+
+
+
+
+
+</main>
