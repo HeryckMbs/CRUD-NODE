@@ -40,4 +40,21 @@ async function atores_filme(id_filme) {
     return atores.rows
 }
 
-module.exports = { paises, categorias, filmes_categoria, filme, atores_filme }
+async function lojas(){
+    const lojas = await db.query(`select l.loja_id, e.endereco, e.bairro,c.cidade,f.primeiro_nome, f.ultimo_nome, f.email  from loja l inner join endereco e on e.endereco_id = l.endereco_id 
+    inner join funcionario f on f.funcionario_id = l.gerente_id 
+    inner join cidade c on c.cidade_id = e.cidade_id ;`)
+    return lojas.rows;
+}
+
+async function cidades(){
+    const cidades = await db.query(`SELECT cidade_id,cidade from cidade`);
+    return cidades.rows;
+}
+async function funcionarios(){
+    const funcionarios = await db.query(`SELECT funcionario_id,primeiro_nome,ultimo_nome from funcionario`);
+    return funcionarios.rows;
+}
+
+
+module.exports = { paises, categorias, filmes_categoria, filme, atores_filme, lojas, cidades, funcionarios}

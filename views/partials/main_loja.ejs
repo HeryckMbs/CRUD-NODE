@@ -1,0 +1,72 @@
+<main class="col-10">
+        <h3 class="text-center">Lojas cadastradas</h3>
+        <table style="width: 80%;" class="table">
+            <thead class="table-dark">
+                <tr>
+                    <th>Número da Loja</th>
+                    <th>Rua</th>
+                    <th>Bairro</th>
+                    <th>Cidade</th>
+                    <th>Gerente</th>
+                    <th>Email do gerente</th>
+                </tr>
+            </thead>
+            <tbody class="table-group-divider table-success table-bordered border-success">
+               <% lojas.forEach(function(loja){ %>
+                <tr>
+                    <td><%= loja.loja_id %></td>
+                    <td><%= loja.endereco %></td>
+                    <td><%= loja.bairro %></td>
+                    <td><%= loja.cidade %></td>
+                    <td><%= loja.primeiro_nome +" "+ loja.ultimo_nome %></td>
+                    <td><%= loja.email %></td>
+                </tr>
+              <% }) %>
+              
+            </tbody>
+        </table>
+
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+            Cadastrar Loja
+          </button>
+
+  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog ">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form method="POST" action="http://localhost:3000/lojas/salvar">
+            <div class="row">
+                <div class="col-md-12 form-group">
+                    <input type="text" name="rua" class="form-control">
+                    <input type="text" name="bairro" class="form-control">
+                    <input type="text" name="cep" class="form-control">
+                    <select class="form-control" name="cidade">
+                        <% cidades.forEach(function(cidade){ %>
+                            <option value="<%=cidade.cidade_id%>"><%= cidade.cidade %></option>
+                        <% }) %>
+
+                    </select>
+                    <select class="form-control" name="funcionario">
+                        <% funcionarios.forEach(function(funcionario){ %>
+                            <option value="<%=funcionario.funcionario_id%>"><%= funcionario.primeiro_nome + " " + funcionario.ultimo_nome %></option>    
+                        <% }) %>
+                    </select>
+            
+            </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+    </form>
+
+      </div>
+    </div>
+  </div>
+
+
+</main>
