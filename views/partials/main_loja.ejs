@@ -29,6 +29,8 @@
         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
             Cadastrar Loja
           </button>
+          
+          <form method="POST" action="http://localhost:3000/lojas/salvar">
 
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog ">
@@ -38,7 +40,6 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <form method="POST" action="http://localhost:3000/lojas/salvar">
             <div class="row">
                 <div class="col-md-12 form-group">
                     <input type="text" name="rua" class="form-control">

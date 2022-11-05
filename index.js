@@ -15,9 +15,10 @@ db.connect();
 /* 
     ROTAS
 */
+app.use(express.json())
 
 router.post('/lojas/salvar', function (req,res){
-    console.log('alo')
+    console.log('ola')
     res.status(200).send(req.body)
 })
 
@@ -62,7 +63,6 @@ app.route('/detalhes/:id').get(async (req, res) => {
 });
 
 //middleware
-app.use(express.json())
 let nome = "Heryck ";
 
 app.route('/post').post(function (req, res) {
