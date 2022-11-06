@@ -5,8 +5,10 @@ const db = require('./database/_database')
 const express = require('express');
 const app = express();
 const select = require('./database/select')
-const router = express.Router();
+const insert = require('./database/insert')
 
+const router = express.Router();
+app.use(express.urlencoded());
 
 app.set("view engine", "ejs");
 app.listen('3000');
@@ -17,9 +19,27 @@ db.connect();
 */
 app.use(express.json())
 
-router.post('/lojas/salvar', function (req,res){
-    console.log('ola')
-    res.status(200).send(req.body)
+app.route('/lojas/salvar').post(async (req,res)=> {
+    try{
+        const endereco = {
+            'endereco' : req.body.rua,
+            'bairro' : req.body.bairro,
+            'cidade' : parseInt(req.body.cidade),
+            'cep' : req.body.cep,
+            'telefone' : req.body.telefone
+        }
+        const endereco_novo = await insert.endereco(endereco);
+        const loja = {
+                    'gerente_id' : parseInt(req.body.funcionario),
+                    'endereco_id' : endereco_novo.endereco_id
+        }
+        console.log(endereco_novo)
+        const lojaNova = await insert.loja(loja)
+        console.log('chegou')
+    }catch(error){
+            // res.status(200).send(req.body)
+
+    } 
 })
 
 app.route('/').get(async (req, res) => {
@@ -64,7 +84,6 @@ app.route('/detalhes/:id').get(async (req, res) => {
 
 //middleware
 let nome = "Heryck ";
-
 app.route('/post').post(function (req, res) {
     res.send(req.body.content)
 });

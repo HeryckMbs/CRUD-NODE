@@ -30,7 +30,6 @@
             Cadastrar Loja
           </button>
           
-          <form method="POST" action="http://localhost:3000/lojas/salvar">
 
   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog ">
@@ -40,17 +39,26 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
+          <form method="POST" action="/lojas/salvar">
+
             <div class="row">
                 <div class="col-md-12 form-group">
+                  <label for="rua">Rua</label>
                     <input type="text" name="rua" class="form-control">
+                    <label for="bairro">Bairro</label>
                     <input type="text" name="bairro" class="form-control">
+                    <label for="cep">CEP</label>
                     <input type="text" name="cep" class="form-control">
+                    <label for="telefone">Telefone</label>
+                    <input type="number" name="telefone" class="form-control">
+                    <label for="cidade">Cidade</label>
                     <select class="form-control" name="cidade">
                         <% cidades.forEach(function(cidade){ %>
                             <option value="<%=cidade.cidade_id%>"><%= cidade.cidade %></option>
                         <% }) %>
 
                     </select>
+                    <label for="funcionario">Funcionário</label>
                     <select class="form-control" name="funcionario">
                         <% funcionarios.forEach(function(funcionario){ %>
                             <option value="<%=funcionario.funcionario_id%>"><%= funcionario.primeiro_nome + " " + funcionario.ultimo_nome %></option>    
