@@ -5,20 +5,35 @@ const db = require('./database/_database')
 const express = require('express');
 const app = express();
 const select = require('./database/select')
-const insert = require('./database/insert')
+const insert = require('./database/insert');
 
 const router = express.Router();
 app.use(express.urlencoded());
 
 app.set("view engine", "ejs");
 app.listen('3000');
-app.use(express.static("public"))
+
+app.use('/public',express.static(__dirname+"/public"))
+app.use('/node_modules',express.static(__dirname+"/node_modules"))
 db.connect();
 /* 
     ROTAS
 */
 app.use(express.json())
 
+async function  lojas(res,success){
+    const lojas = await select.lojas();
+    const cidades = await select.cidades();
+    const funcionarios = await select.funcionarios();
+    res.render("pages/lojas",
+        {
+            lojas: lojas,
+            cidades: cidades,
+            funcionarios: funcionarios,
+            success : success
+        }
+    );
+}
 app.route('/lojas/salvar').post(async (req,res)=> {
     try{
         const endereco = {
@@ -31,14 +46,12 @@ app.route('/lojas/salvar').post(async (req,res)=> {
         const endereco_novo = await insert.endereco(endereco);
         const loja = {
                     'gerente_id' : parseInt(req.body.funcionario),
-                    'endereco_id' : endereco_novo.endereco_id
+                    'endereco_id' : endereco_novo
         }
-        console.log(endereco_novo)
-        const lojaNova = await insert.loja(loja)
-        console.log('chegou')
+        await insert.loja(loja)
+        lojas(res,true)
     }catch(error){
-            // res.status(200).send(req.body)
-
+            lojas(false)
     } 
 })
 
@@ -49,16 +62,7 @@ app.route('/').get(async (req, res) => {
 });
 
 app.route('/lojas').get(async (req, res) => {
-    const lojas = await select.lojas();
-    const cidades = await select.cidades();
-    const funcionarios = await select.funcionarios();
-    res.render("pages/lojas",
-        {
-            lojas: lojas,
-            cidades: cidades,
-            funcionarios: funcionarios
-        }
-    );
+    lojas(res,'normal')
 });
 
 
