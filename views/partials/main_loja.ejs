@@ -35,7 +35,9 @@
                 <button class="btn btn-warning"><i class="fa-solid fa-pencil"></i></button>
               </td>
               <td>
+                <form enctype="multipart/form-data" method="post" action="/lojadelete/<%=loja.loja_id%>">
                 <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+              </form>
               </td>
             </tr>
             <% }) %>
@@ -107,5 +109,9 @@
 <script>
   // alertify.alert('Ready3!');
 </script>
+<% } else if(locals.success && success === 'excluido'){ %>
+  <script>
+    alertify.success('Loja excluída com sucesso!');
+  </script>
 <% } %>
 <% locals.success ? success = 'normal' : '' %>

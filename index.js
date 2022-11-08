@@ -6,6 +6,8 @@ const express = require('express');
 const app = express();
 const select = require('./database/select')
 const insert = require('./database/insert');
+const delet = require('./database/delete');
+
 
 const router = express.Router();
 app.use(express.urlencoded());
@@ -51,9 +53,20 @@ app.route('/lojas/salvar').post(async (req,res)=> {
         await insert.loja(loja)
         lojas(res,true)
     }catch(error){
-            lojas(false)
+            lojas(res,false)
     } 
 })
+
+
+app.route('/lojadelete/:id').delete(async (req,res)=>{
+    try{
+        await delet.loja(req.params.id)
+        lojas(res,'excluido')
+    }catch(err){
+
+    }
+})
+
 
 app.route('/').get(async (req, res) => {
     const categoria = await select.categorias();
