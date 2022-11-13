@@ -14,9 +14,7 @@ async function loja(loja){
     const values = [loja.gerente_id,loja.endereco_id,new Date().toLocaleString()];
     console.log(values)
     const e = await db.query(query,values)
-    console.log('aqui')
 
-    console.log(e)
     return e;
 }
 

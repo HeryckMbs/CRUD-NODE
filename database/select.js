@@ -47,6 +47,12 @@ async function lojas(){
     return lojas.rows;
 }
 
+async function loja(idLoja){
+    const query = 'SELECT * FROM loja where "loja_id = $1';
+    const value = [idLoja];
+    const operation = await db.query(query,value);
+    return operation.rows; 
+}
 async function cidades(){
     const cidades = await db.query(`SELECT cidade_id,cidade from cidade`);
     return cidades.rows;

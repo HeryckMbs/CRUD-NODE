@@ -23,16 +23,19 @@ db.connect();
 */
 app.use(express.json())
 
-async function  lojas(res,success){
+async function  lojas(res,success,messageOperation,idLojaEdit){
     const lojas = await select.lojas();
     const cidades = await select.cidades();
     const funcionarios = await select.funcionarios();
+
+
     res.render("pages/lojas",
         {
             lojas: lojas,
             cidades: cidades,
             funcionarios: funcionarios,
-            success : success
+            success : success,
+            message: messageOperation,
         }
     );
 }
@@ -51,19 +54,19 @@ app.route('/lojas/salvar').post(async (req,res)=> {
                     'endereco_id' : endereco_novo
         }
         await insert.loja(loja)
-        lojas(res,true)
+        lojas(res,true,'Loja cadastrada com sucesso!')
     }catch(error){
-            lojas(res,false)
+            lojas(res,false,'Não foi possível cadastrar sua loja')
     } 
 })
 
 
-app.route('/lojadelete/:id').delete(async (req,res)=>{
+app.route('/lojadelete').delete(async (req,res)=>{
     try{
-        await delet.loja(req.params.id)
-        lojas(res,'excluido')
+        await delet.loja(req.body.idLoja)
+        lojas(res,true,'Loja excluida com sucesso!')
     }catch(err){
-
+        lojas(res,false,'Não foi possível excluir sua loja')
     }
 })
 
@@ -77,9 +80,6 @@ app.route('/').get(async (req, res) => {
 app.route('/lojas').get(async (req, res) => {
     lojas(res,'normal')
 });
-
-
-
 
 app.route('/categoria/:id').get(async (req, res) => {
     const filmes = await select.filmes_categoria(req.params.id)
@@ -115,3 +115,4 @@ app.route('/delete/:id').delete(function (req, res) {
     res.send(req.params.id);
 
 });
+

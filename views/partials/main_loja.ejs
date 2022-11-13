@@ -1,51 +1,51 @@
-<main class="col-10">
-  
-  <div class="container">
-    <h3 class="text-center">Lojas cadastradas</h3>
+<main class="col-10 d-flex justify-content-center">
+
+  <div class="container border border-3 border-success p-2 rounded" style="margin: 20px;" >
+    <h3 class="text-center">Lojas Cadastradas</h3>
     <div class="panel panel-default">
-      <div class="panel-heading">  
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-        Cadastrar Loja
-      </button>
-    </div>
-      <div class="panel-body"><div class="table table-responsive">
-        <table style="width: 80%;" class="table">
-          <thead class="table-dark">
-            <tr>
-              <th>Número da Loja</th>
-              <th>Rua</th>
-              <th>Bairro</th>
-              <th>Cidade</th>
-              <th>Gerente</th>
-              <th>Email do gerente</th>
-              <th colspan="2">Ações</th>
-            </tr>
-          </thead>
-          <tbody class="table-group-divider table-success table-bordered border-success">
-            <% lojas.forEach(function(loja){ %>
-            <tr>
-              <td><%= loja.loja_id %></td>
-              <td><%= loja.endereco %></td>
-              <td><%= loja.bairro %></td>
-              <td><%= loja.cidade %></td>
-              <td><%= loja.primeiro_nome +" "+ loja.ultimo_nome %></td>
-              <td><%= loja.email %></td>
-      
-              <td>
-                <button class="btn btn-warning"><i class="fa-solid fa-pencil"></i></button>
-              </td>
-              <td>
-                <form enctype="multipart/form-data" method="post" action="/lojadelete/<%=loja.loja_id%>">
-                <button class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
-              </form>
-              </td>
-            </tr>
-            <% }) %>
-      
-          </tbody>
-        </table>
-      </div></div>
-      <div class="panel-footer">Panel Footer</div>
+      <div class="panel-heading text" style="display: flex; margin: 10px;justify-content:center">
+        <button type="button" class="btn btn-primary text-center" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          Cadastrar Loja
+        </button>
+      </div>
+      <div class="panel-body">
+        <div class="table table-responsive">
+          <table style="width: 100%;" class="table">
+            <thead class="table-dark">
+              <tr>
+                <th>Número da Loja</th>
+                <th>Rua</th>
+                <th>Bairro</th>
+                <th>Cidade</th>
+                <th>Gerente</th>
+                <th>Email do gerente</th>
+                <th colspan="2">Ações</th>
+              </tr>
+            </thead>
+            <tbody class="table-group-divider table-success table-bordered border-success">
+              <% lojas.forEach(function(loja){ %>
+              <tr>
+                <td><%= loja.loja_id %></td>
+                <td><%= loja.endereco %></td>
+                <td><%= loja.bairro %></td>
+                <td><%= loja.cidade %></td>
+                <td><%= loja.primeiro_nome +" "+ loja.ultimo_nome %></td>
+                <td><%= loja.email %></td>
+
+                <!-- <td>
+                  <button class="btn btn-warning"><i class="fa-solid fa-pencil"></i></button>
+                </td> -->
+                <td>
+                  <button onclick="deleteLoja('<%= loja.loja_id %>')" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                </td>
+              </tr>
+              <% }) %>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="panel-footer"></div>
     </div>
   </div>
 
@@ -97,21 +97,34 @@
 
 
 </main>
+
+<script>
+  function deleteLoja(idLojaDelete){
+    $.ajax({
+      method: "DELETE",
+      url: '/lojadelete',
+      data: {idLoja: parseInt(idLojaDelete)},
+
+    }).done(function(response) {
+      alertify.success('Deu certo em')
+        setTimeout(() => location.reload(),2000)
+    }).fail(function(jqXHR, textStatus) {
+      alertify.error('Não foi possível excluir a loja!')
+    })
+  }
+
+  $('form').submit(function(){
+    $(this)[0].reset();
+});
+
+</script>
+
 <% if(locals.success && success === true){ %>
 <script>
-  alertify.success('Loja cadastrada com sucesso!');
+  alertify.success('<%=message%>');
 </script>
 <% }else if(locals.success && success === false) { %>
 <script>
-  alertify.error('Ocorreu um erro ao cadastrar a loja!');
+  alertify.error('<%=message%>');
 </script>
-<% } else if(locals.success && success === 'normal'){ %>
-<script>
-  // alertify.alert('Ready3!');
-</script>
-<% } else if(locals.success && success === 'excluido'){ %>
-  <script>
-    alertify.success('Loja excluída com sucesso!');
-  </script>
 <% } %>
-<% locals.success ? success = 'normal' : '' %>

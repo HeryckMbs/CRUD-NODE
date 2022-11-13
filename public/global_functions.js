@@ -4,3 +4,7 @@ $('.submit-form').on('change',function(){
     let form = $('.submit-form');
     console.log(form)
 })
+
+function isset(variable){
+    
+}
