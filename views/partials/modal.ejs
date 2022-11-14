@@ -1,7 +1,7 @@
 <div class="modal-dialog ">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <h1 class="modal-title fs-5" >Modal title</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -10,13 +10,13 @@
           <div class="row">
             <div class="col-md-12 form-group">
               <label for="rua">Rua</label>
-              <input value="<%=loja%> " type="text" name="rua" class="form-control">
+              <input value="<%= locals.endereco ? endereco.endereco : '' %>" type="text" name="rua" class="form-control">
               <label for="bairro">Bairro</label>
-              <input type="text" name="bairro" class="form-control">
+              <input value="<%= locals.endereco ? endereco.bairro : '' %>" type="text" name="bairro" class="form-control">
               <label for="cep">CEP</label>
-              <input type="text" name="cep" class="form-control">
+              <input value="<%= locals.endereco ? endereco.cep : '' %>" type="text" name="cep" class="form-control">
               <label for="telefone">Telefone</label>
-              <input type="number" name="telefone" class="form-control">
+              <input value="<%= locals.endereco ? endereco.telefone : '' %>" type="number" name="telefone" class="form-control">
               <label for="cidade">Cidade</label>
               <select class="form-control" name="cidade">
                 <% cidades.forEach(function(cidade){ %>

@@ -115,14 +115,24 @@ app.route('/delete/:id').delete(function (req, res) {
 
 });
 
-app.route('/lojamodal/:idLoja').get(async function(req,res) {
+app.route('/lojamodal/:idLoja?').get(async function(req,res) {
     const cidades = await select.cidades();
     const funcionarios = await select.funcionarios();
-    const loja = select.loja(req.params.idLoja);
-    res.render('partials/modal',{
-        lojas: lojas,
-        cidades: cidades,
-        funcionarios: funcionarios,
-        loja: loja
-    })
+    if(req.params.idLoja != 0){
+        const loja = await select.loja(req.params.idLoja);
+        res.render('partials/modal',{
+            cidades: cidades,
+            funcionarios: funcionarios,
+            loja: loja.loja,
+            endereco: loja.endereco[0],
+    
+        })
+    }else{
+        res.render('partials/modal',{
+            cidades: cidades,
+            funcionarios: funcionarios,
+        })
+    }
+    
+  
 });

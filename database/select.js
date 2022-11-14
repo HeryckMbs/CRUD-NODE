@@ -48,10 +48,13 @@ async function lojas(){
 }
 
 async function loja(idLoja){
-    const query = 'SELECT * FROM loja where "loja_id = $1';
+    const query = 'SELECT * FROM loja where "loja_id" = $1';
     const value = [idLoja];
     const operation = await db.query(query,value);
-    return operation.rows; 
+    const queryEndereco = 'SELECT endereco,bairro,cep,telefone from endereco WHERE "endereco_id" = $1';
+    const valuesEndereco = [operation.rows[0].endereco_id]; 
+    const endereco = await db.query(queryEndereco,valuesEndereco);
+    return {loja: operation.rows, endereco: endereco.rows}; 
 }
 async function cidades(){
     const cidades = await db.query(`SELECT cidade_id,cidade from cidade`);

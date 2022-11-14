@@ -4,9 +4,9 @@
     <h3 class="text-center">Lojas Cadastradas</h3>
     <div class="panel panel-default">
       <div class="panel-heading text" style="display: flex; margin: 10px;justify-content:center">
-        <button type="button" class="btn btn-primary text-center" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        <a onclick="modalG(0)" class="btn btn-primary text-center">
           Cadastrar Loja
-        </button>
+        </a>
       </div>
       <div class="panel-body">
         <div class="table table-responsive">
@@ -33,7 +33,7 @@
                 <td><%= loja.email %></td>
 
                 <td>
-                  <button onclick="modalG('<%= loja.loja_id %>')" class="btn btn-warning" id="edit<%= loja.loja_id %>" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-pencil"></i></button>
+                  <a onclick="modalG('<%= loja.loja_id %>')" class="btn btn-warning" id="edit<%= loja.loja_id %>" ><i class="fa-solid fa-pencil"></i></a>
                 </td>
                 <td>
                   <button onclick="deleteLoja('<%= loja.loja_id %>')" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
@@ -51,52 +51,7 @@
     </div>
   </div>
 
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog ">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <form class="submit-form" method="POST" action="/lojas/salvar">
-
-            <div class="row">
-              <div class="col-md-12 form-group">
-                <label for="rua">Rua</label>
-                <input type="text" name="rua" class="form-control">
-                <label for="bairro">Bairro</label>
-                <input type="text" name="bairro" class="form-control">
-                <label for="cep">CEP</label>
-                <input type="text" name="cep" class="form-control">
-                <label for="telefone">Telefone</label>
-                <input type="number" name="telefone" class="form-control">
-                <label for="cidade">Cidade</label>
-                <select class="form-control" name="cidade">
-                  <% cidades.forEach(function(cidade){ %>
-                  <option value="<%=cidade.cidade_id%>"><%= cidade.cidade %></option>
-                  <% }) %>
-
-                </select>
-                <label for="funcionario">Funcionário</label>
-                <select class="form-control" name="funcionario">
-                  <% funcionarios.forEach(function(funcionario){ %>
-                  <option value="<%=funcionario.funcionario_id%>"><%= funcionario.primeiro_nome + " " + funcionario.ultimo_nome %></option>
-                  <% }) %>
-                </select>
-
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="submit" class="btn btn-primary">Save changes</button>
-            </div>
-          </form>
-
-        </div>
-      </div>
-    </div>
-
+  
 
 
 
@@ -116,6 +71,7 @@
 
     $('#modalLoja').empty();
     $('#modalLoja').append(html)
+    $('#modalLoja').modal('show')
 
     })
   }
