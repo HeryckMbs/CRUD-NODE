@@ -1,6 +1,6 @@
 <main class="col-10 d-flex justify-content-center">
 
-  <div class="container border border-3 border-success p-2 rounded" style="margin: 20px;" >
+  <div class="container border border-3 border-success p-2 rounded" style="margin: 20px;">
     <h3 class="text-center">Lojas Cadastradas</h3>
     <div class="panel panel-default">
       <div class="panel-heading text" style="display: flex; margin: 10px;justify-content:center">
@@ -32,9 +32,9 @@
                 <td><%= loja.primeiro_nome +" "+ loja.ultimo_nome %></td>
                 <td><%= loja.email %></td>
 
-                <!-- <td>
-                  <button class="btn btn-warning"><i class="fa-solid fa-pencil"></i></button>
-                </td> -->
+                <td>
+                  <button onclick="modalG('<%= loja.loja_id %>')" class="btn btn-warning" id="edit<%= loja.loja_id %>" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-solid fa-pencil"></i></button>
+                </td>
                 <td>
                   <button onclick="deleteLoja('<%= loja.loja_id %>')" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
                 </td>
@@ -45,7 +45,9 @@
           </table>
         </div>
       </div>
-      <div class="panel-footer"></div>
+      <div class="panel-footer"> 
+      
+      </div>
     </div>
   </div>
 
@@ -96,27 +98,47 @@
     </div>
 
 
+
+
 </main>
 
 <script>
-  function deleteLoja(idLojaDelete){
+ 
+
+  function modalG(idLojaEdit) {
+    $.ajax({
+      method: "GET",
+      url: '/lojamodal/'+idLojaEdit,
+      data:{
+        idLoja : idLojaEdit
+      }
+    }).done(function(html) {
+
+    $('#modalLoja').empty();
+    $('#modalLoja').append(html)
+
+    })
+  }
+
+  function deleteLoja(idLojaDelete) {
     $.ajax({
       method: "DELETE",
       url: '/lojadelete',
-      data: {idLoja: parseInt(idLojaDelete)},
+      data: {
+        idLoja: parseInt(idLojaDelete)
+      },
 
     }).done(function(response) {
       alertify.success('Deu certo em')
-        setTimeout(() => location.reload(),2000)
+      setTimeout(() => location.reload(), 2000)
     }).fail(function(jqXHR, textStatus) {
       alertify.error('Não foi possível excluir a loja!')
     })
   }
 
-  $('form').submit(function(){
+  $('form').submit(function() {
     $(this)[0].reset();
-});
-
+  });
 </script>
 
 <% if(locals.success && success === true){ %>

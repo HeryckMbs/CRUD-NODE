@@ -9,7 +9,6 @@ const insert = require('./database/insert');
 const delet = require('./database/delete');
 
 
-const router = express.Router();
 app.use(express.urlencoded());
 
 app.set("view engine", "ejs");
@@ -116,3 +115,14 @@ app.route('/delete/:id').delete(function (req, res) {
 
 });
 
+app.route('/lojamodal/:idLoja').get(async function(req,res) {
+    const cidades = await select.cidades();
+    const funcionarios = await select.funcionarios();
+    const loja = select.loja(req.params.idLoja);
+    res.render('partials/modal',{
+        lojas: lojas,
+        cidades: cidades,
+        funcionarios: funcionarios,
+        loja: loja
+    })
+});

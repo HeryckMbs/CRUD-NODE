@@ -63,4 +63,4 @@ async function funcionarios(){
 }
 
 
-module.exports = { paises, categorias, filmes_categoria, filme, atores_filme, lojas, cidades, funcionarios}
+module.exports = { paises, categorias, filmes_categoria, filme, atores_filme, lojas, cidades, funcionarios,loja}
