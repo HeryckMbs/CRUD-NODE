@@ -29,6 +29,13 @@ async function filme(id_filme) {
 }
 
 
+async function idiomas(){
+    const idiomas = await db.query('select idioma_id,nome from idioma')
+    return idiomas.rows;
+}
+
+
+
 async function atores_filme(id_filme) {
     const atores = await db.query(
     `select a.ator_id, a.primeiro_nome, a.ultimo_nome 
@@ -66,4 +73,4 @@ async function funcionarios(){
 }
 
 
-module.exports = { paises, categorias, filmes_categoria, filme, atores_filme, lojas, cidades, funcionarios,loja}
+module.exports = { idiomas,paises, categorias, filmes_categoria, filme, atores_filme, lojas, cidades, funcionarios,loja}

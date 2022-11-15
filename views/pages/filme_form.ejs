@@ -1,0 +1,41 @@
+<div class="row">
+    <div class="col-md-6 form-group">
+        <label for="titulo">Título</label>
+        <input value="<%= locals.endereco ? endereco.endereco : '' %>" type="text" name="rua" class="form-control">
+        <label for="">Descrição</label>
+        <input value="<%= locals.endereco ? endereco.bairro : '' %>" type="text" name="descricao" class="form-control">
+        <label for="cep">Ano de Lançamento</label>
+        <input value="<%= locals.endereco ? endereco.cep : '' %>" type="text" name="ano_de_lancamento" class="form-control">
+        <label for="cep">Duração do filme</label>
+        <input value="<%= locals.endereco ? endereco.cep : '' %>" type="text" name="duracao_do_filme" class="form-control">
+        <label for="cep">Idioma</label>
+        <select class="form-select" name="idioma">
+            <option>
+                SELECIONE UMA OPÇÃO
+            </option>
+            <% data.idiomas.forEach(function(idioma){ %>
+            <option value="<%=idioma.idioma_id %>">
+            
+                <%= idioma.nome %> 
+                
+            </option>
+                <% }) %>
+        
+        </select>
+      
+    </div>
+    <div class="col-md-6 form-group">
+      <label for="telefone">Duração da locação</label>
+      <input value="<%= locals.endereco ? endereco.telefone : '' %>" type="number" name="duracao_da_locacao" class="form-control">
+      <label for="telefone">Preço da locação</label>
+      <input value="<%= locals.endereco ? endereco.telefone : '' %>" type="number" name="preco_da_locacao" class="form-control">
+      <label for="telefone">Custo de Substituição</label>
+      <input value="<%= locals.endereco ? endereco.telefone : '' %>" type="number" name="custo_de_substituicao" class="form-control">
+      <label for="telefone">Classificação</label>
+      <input value="<%= locals.endereco ? endereco.telefone : '' %>" type="number" name="classificacao" class="form-control">
+    
+      </select>
+
+    </div>
+
+  </div>
