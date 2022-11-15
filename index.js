@@ -22,6 +22,51 @@ db.connect();
 */
 app.use(express.json())
 
+/**
+ * 
+ * 
+ * ROTAS GERAIS
+ * 
+ */
+app.route('/').get(async (req, res) => {
+    const categoria = await select.categorias();
+    res.render("pages/index",
+        { categorias: categoria })
+});
+
+app.route('/categoria/:id').get(async (req, res) => {
+    const filmes = await select.filmes_categoria(req.params.id)
+    res.render("pages/categoria",
+        {
+            filmes: filmes.filmes,
+            categoria: filmes.categoria[0].nome
+        })
+})
+
+
+app.route('/categorias').get(async (req,res) =>{
+    const categorias = await select.categorias()
+    res.send(categorias);
+});
+app.route('/filmescategoria/:id').get(async (req,res) =>{
+    const filmes = await select.filmes_categoria(req.params.id)
+    res.send(filmes);
+});
+
+app.route('/detalhes/:id').get(async (req, res) => {
+    const filme = await select.filme(req.params.id);
+    const atores = await select.atores_filme(req.params.id)
+
+    res.render("pages/detalhes",
+        { filme: filme, atores: atores }
+    )
+});
+
+/*
+
+ROTAS DE LOJAS
+
+*/
 async function  lojas(res,success,messageOperation,idLojaEdit){
     const lojas = await select.lojas();
     const cidades = await select.cidades();
@@ -59,7 +104,6 @@ app.route('/lojas/salvar').post(async (req,res)=> {
     } 
 })
 
-
 app.route('/lojadelete').delete(async (req,res)=>{
     try{
         await delet.loja(req.body.idLoja)
@@ -69,51 +113,10 @@ app.route('/lojadelete').delete(async (req,res)=>{
     }
 })
 
-
-app.route('/').get(async (req, res) => {
-    const categoria = await select.categorias();
-    res.render("pages/index",
-        { categorias: categoria })
-});
-
 app.route('/lojas').get(async (req, res) => {
     lojas(res,'normal')
 });
 
-app.route('/categoria/:id').get(async (req, res) => {
-    const filmes = await select.filmes_categoria(req.params.id)
-    res.render("pages/categoria",
-        {
-            filmes: filmes.filmes,
-            categoria: filmes.categoria[0].nome
-        })
-})
-
-app.route('/detalhes/:id').get(async (req, res) => {
-    const filme = await select.filme(req.params.id);
-    const atores = await select.atores_filme(req.params.id)
-
-    res.render("pages/detalhes",
-        { filme: filme, atores: atores }
-    )
-});
-
-//middleware
-let nome = "Heryck ";
-app.route('/post').post(function (req, res) {
-    res.send(req.body.content)
-});
-
-app.route('/put').put(function (req, res) {
-    nome += req.body.nome
-    res.send(nome)
-});
-
-app.route('/delete/:id').delete(function (req, res) {
-    nome = "";
-    res.send(req.params.id);
-
-});
 
 app.route('/lojamodal/:idLoja?').get(async function(req,res) {
     const cidades = await select.cidades();
@@ -134,5 +137,7 @@ app.route('/lojamodal/:idLoja?').get(async function(req,res) {
         })
     }
     
-  
 });
+
+
+app.route('/filmes').get((req,res) => res.render("pages/filmes"));

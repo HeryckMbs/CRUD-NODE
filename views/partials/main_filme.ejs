@@ -1,0 +1,107 @@
+<main class="col-10 d-flex justify-content-center">
+
+    <div class="container border border-3 border-success p-2 rounded" style="margin: 20px;">
+      <h3 class="text-center">Filmes</h3>
+      <div class="panel panel-default">
+        <div class="panel-heading text" style="display: flex; margin: 10px;justify-content:center">
+            <a  class="btn btn-primary text-center">
+                Cadastrar Loja
+              </a>
+        </div>
+        <div class="panel-body text-center">
+            <select onchange="filmes()" id="categorias" class="form-select" data-placeholder="SELECIONE UMA CATEGORIA">
+                <option>
+                    SELECIONE UMA OPÇÃO
+                </option>
+        </select>
+
+    
+        <div class="panel-footer"> 
+        <table id="filmesCategoria" class="table table-responsive">
+            
+        </table>
+        </div>
+      </div>
+    </div>
+  
+    
+  
+  
+  
+  </main>
+  
+  <script>
+   $('#categorias').click(function(){
+   $.ajax({
+        method : 'GET',
+        url : '/categorias',
+   }).done(function(response){
+    $('#categorias option').remove()
+    response.forEach(element => {
+        let option = `<option value="${element.categoria_id}">${element.nome}</option>`
+        $('#categorias').append(option)
+    });
+})
+   })
+
+   
+   async function filmes(){
+    let categoria_id = $('#categorias').val();
+    $.ajax({
+        method : 'GET',
+        url: '/filmescategoria/'+categoria_id
+    }).done(async function(response){
+        console.log(response.filmes)
+        let tableHead = 
+        `
+        <thead class="table-dark">
+            <tr>
+                <th>Título</th>
+                <th>Descrição</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody class="table-group-divider table-success table-bordered border-success" id="tab-body">
+        </tbody>`;
+
+        const table = document.getElementById('filmesCategoria');
+        const filho = table.querySelector('thead');
+
+        if(filho == null){
+            $('#filmesCategoria').append(tableHead)
+        }
+        
+        
+
+        $('#tab-body tr').remove();
+        response.filmes.forEach(function(element){
+            let tableBody = 
+            `<tr>
+                <td>${element.titulo}</td>    
+                <td>${element.descricao}</td>    
+                <td>
+                    <a class="btn btn-warning" ><i class="fa-solid fa-pencil"></i></a>
+                    <a class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
+                    </td>
+            </tr>`;
+
+            $('#tab-body').append(tableBody)
+        })
+        
+    })
+   }
+  
+
+
+
+  </script>
+  
+  <% if(locals.success && success === true){ %>
+  <script>
+    alertify.success('<%=message%>');
+  </script>
+  <% }else if(locals.success && success === false) { %>
+  <script>
+    alertify.error('<%=message%>');
+  </script>
+  <% } %>
