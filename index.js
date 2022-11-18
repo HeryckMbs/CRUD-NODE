@@ -38,6 +38,12 @@ async function  lojas(res,success,messageOperation,idLojaEdit){
         }
     );
 }
+
+app.route('/teste').get((req,res)=> {
+    console.log('testte')
+})
+
+
 app.route('/lojas/salvar').post(async (req,res)=> {
     try{
         const endereco = {
