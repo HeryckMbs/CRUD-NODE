@@ -40,12 +40,60 @@ async function sendHtml(path, data) {
 */
 app.use(express.json())
 
-/**
- * 
- * 
- * ROTAS GERAIS
- * 
- */
+async function  lojas(res,success,messageOperation,idLojaEdit){
+    const lojas = await select.lojas();
+    const cidades = await select.cidades();
+    const funcionarios = await select.funcionarios();
+
+
+    res.render("pages/lojas",
+        {
+            lojas: lojas,
+            cidades: cidades,
+            funcionarios: funcionarios,
+            success : success,
+            message: messageOperation,
+        }
+    );
+}
+
+app.route('/teste').get((req,res)=> {
+    console.log('testte')
+})
+
+
+app.route('/lojas/salvar').post(async (req,res)=> {
+    try{
+        const endereco = {
+            'endereco' : req.body.rua,
+            'bairro' : req.body.bairro,
+            'cidade' : parseInt(req.body.cidade),
+            'cep' : req.body.cep,
+            'telefone' : req.body.telefone
+        }
+        const endereco_novo = await insert.endereco(endereco);
+        const loja = {
+                    'gerente_id' : parseInt(req.body.funcionario),
+                    'endereco_id' : endereco_novo
+        }
+        await insert.loja(loja)
+        lojas(res,true,'Loja cadastrada com sucesso!')
+    }catch(error){
+            lojas(res,false,'Não foi possível cadastrar sua loja')
+    } 
+})
+
+
+app.route('/lojadelete').delete(async (req,res)=>{
+    try{
+        await delet.loja(req.body.idLoja)
+        lojas(res,true,'Loja excluida com sucesso!')
+    }catch(err){
+        lojas(res,false,'Não foi possível excluir sua loja')
+    }
+})
+
+
 app.route('/').get(async (req, res) => {
     const categoria = await select.categorias();
     res.render("pages/index",
