@@ -1,7 +1,7 @@
 /* 
     Criando servidor 
 */
-const db = require('./database/_database')
+const database = require('./database/_database')
 const express = require('express');
 const app = express();
 const select = require('./database/select')
@@ -18,8 +18,6 @@ app.listen('3000');
 app.use('/public', express.static(__dirname + "/public"))
 app.use('/node_modules', express.static(__dirname + "/node_modules"))
 app.use('/views', express.static(__dirname + "/views"))
-db.connect();
-
 
 //Função para adicionar conteúdo de uma view em um modal gerado via request ajax
 //transforma o formulario a ser renderizado no modal em string e retorna para a request

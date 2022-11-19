@@ -1,6 +1,8 @@
 const db = require('./_database');
 
 async function loja(id_loja){
+    const client = await db.connect();
+
     console.log('excluiraa')
 
     const query = 'DELETE FROM loja WHERE "loja_id" = $1';
