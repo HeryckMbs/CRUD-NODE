@@ -2,18 +2,24 @@
     Criando servidor 
 */
 const database = require('./database/_database')
+const dotenv = require('dotenv')
+dotenv.config({path: 'config.env'})
+const PORT = process.env.PORT || 8080;
+
 const express = require('express');
 const app = express();
+app.listen(PORT,()=> console.log('server rodando'+ PORT));
+
+
+
 const select = require('./database/select')
 const insert = require('./database/insert');
 const delet = require('./database/delete');
 let ejs = require('ejs');
 const fs = require('fs');
-const path = require('path');
 app.use(express.urlencoded());
 
 app.set("view engine", "ejs");
-app.listen('3000');
 
 app.use('/public', express.static(__dirname + "/public"))
 app.use('/node_modules', express.static(__dirname + "/node_modules"))
